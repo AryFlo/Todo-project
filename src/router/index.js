@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Auth from '../pages/Auth.vue'
 import Dashboard from '../pages/Dashboard.vue'
+import { useUserStore } from '../store/user'
 
 const routes = [
   {
@@ -9,19 +10,33 @@ const routes = [
   },
   {
     path: '/auth',
-    name: 'Auth',
     component: Auth,
   },
   {
     path: '/dashboard',
-    name: 'Dashboard',
     component: Dashboard,
+    meta: { requiresAuth: true },
   },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+// Protección de rutas
+router.beforeEach(async (to, from, next) => {
+  const userStore = useUserStore()
+
+  if (!userStore.user) {
+    await userStore.fetchUser()
+  }
+
+  if (to.meta.requiresAuth && !userStore.user) {
+    return next('/auth')
+  }
+
+  next()
 })
 
 export default router

@@ -1,6 +1,7 @@
 <template>
   <div>
     <AppHeader />
+    <router-view />
     <Nav />
     <main>
       <h2>Dashboard</h2>
