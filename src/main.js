@@ -9,9 +9,8 @@ import piniaPersist from "pinia-plugin-persist";
 import router from "./router";
 import { supabase } from "./supabase";
 
-// Esperamos a que Supabase cargue sesión antes de montar todo
 supabase.auth.getSession().then(({ data, error }) => {
-  // Ya tenemos sesión inicializada
+ 
 
   const pinia = createPinia();
   pinia.use(piniaPersist);

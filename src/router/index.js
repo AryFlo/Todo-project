@@ -17,6 +17,13 @@ const routes = [
     component: Dashboard,
     meta: { requiresAuth: true },
   },
+{
+  path: '/dashboard',
+  name: 'Dashboard',
+  component: () => import('../pages/Dashboard.vue')
+}
+
+
 ]
 
 const router = createRouter({
@@ -24,7 +31,7 @@ const router = createRouter({
   routes,
 })
 
-// Protección de rutas
+
 router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
 

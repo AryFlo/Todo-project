@@ -30,7 +30,7 @@ async function logout() {
       
 }
 .logo_header {
-  width: 10rem;
+  width: 7rem;
   height: auto;
 }
 
