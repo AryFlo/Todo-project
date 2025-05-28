@@ -4,7 +4,10 @@
     <Nav />
 
     <main class="container mt-4">
-      <h2 class="mb-4">Tareas</h2>
+      <h2 class="mb-5 mt-5 text-center">
+        ¡Misiones en marcha! 🔥 Tus pendientes te esperan
+      </h2>
+
       <TaskList @edit="openEditModal" />
 
       <div
@@ -18,17 +21,22 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="newTaskModalLabel">
-                {{ taskToEdit ? "Editar tarea" : "Crear nueva tarea" }}
+                {{ taskToEdit ? "🚀 Editar misión" : " 🚀 Nueva misión " }}
               </h5>
               <button
                 type="button"
                 class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Cerrar"
+                @click="closeModal"
               ></button>
             </div>
             <div class="modal-body">
-              <NewTask :task="taskToEdit" @close="closeModal" />
+              <NewTask
+                :key="taskToEdit?.id || 'new'"
+                :task="taskToEdit"
+                @close="closeModal"
+              />
             </div>
           </div>
         </div>
@@ -38,7 +46,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, nextTick } from "vue";
 import AppHeader from "../components/AppHeader.vue";
 import Nav from "../components/Nav.vue";
 import TaskList from "../components/TaskList.vue";
@@ -46,25 +54,43 @@ import NewTask from "../components/NewTask.vue";
 import { useTaskStore } from "../store/task";
 
 const taskStore = useTaskStore();
+const taskToEdit = ref(null);
+let modalInstance = null;
 
 onMounted(() => {
   taskStore.fetchTasks();
 });
 
-const taskToEdit = ref(null);
+const showModal = async () => {
+  await nextTick();
+  const modalEl = document.getElementById("newTaskModal");
+  if (!modalInstance) {
+    modalInstance = new bootstrap.Modal(modalEl, { backdrop: "static" });
+  }
+  modalInstance.show();
+};
+
+const hideModal = () => {
+  const modalEl = document.getElementById("newTaskModal");
+  if (modalEl) {
+    const instance = bootstrap.Modal.getInstance(modalEl);
+    if (instance) instance.hide();
+  }
+};
 
 const openEditModal = (task) => {
-  taskToEdit.value = task;
-  const modal = new bootstrap.Modal(document.getElementById("newTaskModal"));
-  modal.show();
+  taskToEdit.value = { ...task };
+  showModal();
 };
 
 const closeModal = () => {
-  const modalEl = document.getElementById("newTaskModal");
-  if (modalEl) {
-    const modal = bootstrap.Modal.getInstance(modalEl);
-    if (modal) modal.hide();
-  }
+  hideModal();
   taskToEdit.value = null;
 };
 </script>
+
+<style scoped>
+h2 {
+  color: #6779dc;
+}
+</style>

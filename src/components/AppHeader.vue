@@ -35,13 +35,13 @@ async function logout() {
 }
 
 .btn-outline-danger {
-  background-color: transparent;
-   color: #303c84;
-   border: 2px solid #303c84;
+  background-color: #ff95004f;
+   color: #b55802c2;
+   border: 2px solid #ff95004f;
   
 }
 .btn-outline-danger:hover{
-  background-color: #303c84;
+  background-color: #ff9500;
   color: white;
 }
 

@@ -1,10 +1,10 @@
 <template>
   <div
-    class="navbar d-flex justify-content-between align-items-center px-4 py-3 shadow mb-4"
+    class="navbar d-flex justify-content-center px-4 py-3 shadow mb-4"
   >
-    <h3 class="fw-bold mb-0 text-white">Lo que toca hoy (o no)</h3>
+    <h4 class="fw-bold mb-0 text-white">¿Qué plan para hoy?</h4>
 
-    <div class="d-flex align-items-center gap-5">
+    <div class="d-flex align-items-center gap-5 m-10">
       <button
         type="button"
         class="btn btn-primary"
@@ -13,9 +13,7 @@
       >
         Añadir tarea +
       </button>
-      <button class="btn btn-light rounded-circle shadow-sm">
-        <i class="bi bi-search fs-5"></i>
-      </button>
+
     </div>
   </div>
 </template>
@@ -30,6 +28,7 @@
 .btn-primary {
   background-color: #8a9af9;
   border-color: #8a9af9;
+  margin-left: 50px;
 }
 
 .btn-primary:hover {

@@ -11,10 +11,14 @@ export const useTaskStore = defineStore("task", {
       const {
         data: { user },
       } = await supabase.auth.getUser();
+      
       const { data, error } = await supabase
         .from("tasks")
         .select("*")
-        .eq("user_id", user.id);
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+
+        console.log("Fetched tasks:", data);
 
       if (error) throw error;
       this.tasks = data;
